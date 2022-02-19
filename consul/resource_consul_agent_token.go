@@ -2,6 +2,7 @@ package consul
 
 import (
 	"fmt"
+	consulapi "github.com/hashicorp/consul/api"
 
 	"github.com/hashicorp/terraform-plugin-sdk/helper/schema"
 )
@@ -23,12 +24,15 @@ func resourceConsulAgentToken() *schema.Resource {
 }
 
 func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) error {
-	client, _, writeOptions := getClient(d, meta)
+	client, _, _ := getClient(d, meta)
 	agent := client.Agent()
 
 	token := d.Get("token").(string)
-	writeOptions.Datacenter = ""
-	_, err := agent.UpdateAgentACLToken(token, writeOptions)
+	_, err := agent.UpdateAgentACLToken(token, &consulapi.WriteOptions{
+		Datacenter: "",
+		Namespace:  "",
+		Token:      token,
+	})
 
 	if err != nil {
 		return fmt.Errorf("failed to update agent acl agent token: %v", err)
