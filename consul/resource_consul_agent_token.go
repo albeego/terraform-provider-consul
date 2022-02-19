@@ -8,11 +8,10 @@ import (
 
 func resourceConsulAgentToken() *schema.Resource {
 	return &schema.Resource{
-		Create:             resourceConsulAgentTokenCreate,
-		Update:             resourceConsulAgentTokenCreate,
-		Read:               resourceConsulAgentTokenRead,
-		Delete:             resourceConsulAgentTokenDelete,
-		DeprecationMessage: "The consul_agent_Token resource will be deprecated and removed in a future version. More information: https://github.com/hashicorp/terraform-provider-consul/issues/46",
+		Create: resourceConsulAgentTokenCreate,
+		Update: resourceConsulAgentTokenCreate,
+		Read:   resourceConsulAgentTokenRead,
+		Delete: resourceConsulAgentTokenDelete,
 
 		Schema: map[string]*schema.Schema{
 			"token": {

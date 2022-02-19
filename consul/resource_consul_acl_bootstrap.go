@@ -41,8 +41,9 @@ func resourceConsulACLBootstrapCreate(d *schema.ResourceData, meta interface{}) 
 
 	d.SetId(token.AccessorID)
 	d.Set("secret_id", token.SecretID)
+	d.Set("token", token.SecretID)
 
-	return resourceConsulACLTokenRead(d, meta)
+	return nil
 }
 
 func resourceConsulACLBootstrapRead(d *schema.ResourceData, meta interface{}) error {
