@@ -27,6 +27,7 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 	agent := client.Agent()
 
 	token := d.Get("token").(string)
+	writeOptions.Datacenter = ""
 	_, err := agent.UpdateAgentACLToken(token, writeOptions)
 
 	if err != nil {
