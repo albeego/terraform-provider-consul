@@ -26,24 +26,34 @@ func resourceConsulAgentToken() *schema.Resource {
 
 func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) error {
 	dataCenter := d.Get("datacenter")
-	d.Set("datacenter", "")
+	err := d.Set("datacenter", "")
+	if err != nil {
+		return fmt.Errorf("failed to update agent acl agent token: %v", err)
+	}
 	client, _, writeOptions := getClient(d, meta)
 	agent := client.Agent()
 
 	token := d.Get("token").(string)
-	_, err := agent.UpdateAgentACLToken(token, writeOptions)
+	_, err = agent.UpdateAgentACLToken(token, writeOptions)
 
 	if err != nil {
 		return fmt.Errorf("failed to update agent acl agent token: %v", err)
 	}
-	d.Set("datacenter", dataCenter)
+	err = d.Set("datacenter", dataCenter)
+	if err != nil {
+		return fmt.Errorf("failed to update agent acl agent token: %v", err)
+	}
+	d.SetId(token)
 
 	return nil
 }
 
 func resourceConsulAgentTokenRead(d *schema.ResourceData, meta interface{}) error {
 	token := d.Get("token").(string)
-	d.Set("token", token)
+	err := d.Set("token", token)
+	if err != nil {
+		return fmt.Errorf("failed to read agent acl agent token: %v", err)
+	}
 	return nil
 }
 
