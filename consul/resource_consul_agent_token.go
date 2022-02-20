@@ -11,6 +11,9 @@ func resourceConsulAgentToken() *schema.Resource {
 		Update: resourceConsulAgentTokenCreate,
 		Read:   resourceConsulAgentTokenRead,
 		Delete: resourceConsulAgentTokenDelete,
+		Importer: &schema.ResourceImporter{
+			State: schema.ImportStatePassthrough,
+		},
 
 		Schema: map[string]*schema.Schema{
 			"token": {
@@ -39,6 +42,8 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 }
 
 func resourceConsulAgentTokenRead(d *schema.ResourceData, meta interface{}) error {
+	token := d.Get("token").(string)
+	d.Set("token", token)
 	return nil
 }
 
