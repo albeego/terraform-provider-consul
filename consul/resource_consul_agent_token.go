@@ -28,7 +28,7 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 	dataCenter := d.Get("datacenter")
 	err := d.Set("datacenter", "")
 	if err != nil {
-		return fmt.Errorf("failed to update agent acl agent token: %v", err)
+		return fmt.Errorf("failed to set datacenter to empty: %v", err)
 	}
 	client, _, writeOptions := getClient(d, meta)
 	agent := client.Agent()
@@ -41,7 +41,7 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 	}
 	err = d.Set("datacenter", dataCenter)
 	if err != nil {
-		return fmt.Errorf("failed to update agent acl agent token: %v", err)
+		return fmt.Errorf("failed to reset datacenter: %v", err)
 	}
 	d.SetId(token)
 
