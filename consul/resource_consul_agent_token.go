@@ -20,6 +20,12 @@ func resourceConsulAgentToken() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: true,
 			},
+			"datacenter": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+				ForceNew: true,
+			},
 		},
 	}
 }
