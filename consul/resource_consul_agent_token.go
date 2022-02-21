@@ -17,14 +17,21 @@ func resourceConsulAgentToken() *schema.Resource {
 
 		Schema: map[string]*schema.Schema{
 			"token": {
-				Type:     schema.TypeString,
-				Required: true,
+				Type:      schema.TypeString,
+				Required:  true,
+				Sensitive: true,
 			},
 			"datacenter": {
 				Type:     schema.TypeString,
 				Optional: true,
 				Computed: true,
 				ForceNew: true,
+			},
+			"token_name": {
+				Type:        schema.TypeString,
+				Required:    true,
+				ForceNew:    true,
+				Description: "Token name as found in the agent configuration: default, agent and replication.",
 			},
 		},
 	}
@@ -35,7 +42,22 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 	agent := client.Agent()
 
 	token := d.Get("token").(string)
-	_, err := agent.UpdateAgentACLToken(token, writeOptions)
+	tokenName := d.Get("token_name").(string)
+
+	var err error
+	switch tokenName {
+	case "default":
+		_, err = agent.UpdateDefaultACLToken(token, writeOptions)
+		break
+	case "agent":
+		_, err = agent.UpdateAgentACLToken(token, writeOptions)
+		break
+	case "replication":
+		_, err = agent.UpdateReplicationACLToken(token, writeOptions)
+		break
+	default:
+		return fmt.Errorf("failed to update acl %s token, not a valid type. Should be default, agent or replication", tokenName)
+	}
 
 	if err != nil {
 		return fmt.Errorf("failed to update agent acl agent token: %v", err)

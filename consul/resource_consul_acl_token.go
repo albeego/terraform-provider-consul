@@ -34,6 +34,7 @@ func resourceConsulACLToken() *schema.Resource {
 				ForceNew:    true,
 				Computed:    true,
 				Optional:    true,
+				Sensitive:   true,
 				Description: "The secret id.",
 			},
 			"description": {
