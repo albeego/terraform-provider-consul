@@ -23,6 +23,12 @@ func resourceConsulACLBootstrap() *schema.Resource {
 				Optional:    true,
 				Description: "The secret id.",
 			},
+			"token": {
+				Type:     schema.TypeString,
+				Optional: true,
+				Computed: true,
+				ForceNew: true,
+			},
 		},
 	}
 }
