@@ -29,6 +29,13 @@ func resourceConsulACLToken() *schema.Resource {
 				Optional:    true,
 				Description: "The token id.",
 			},
+			"secret_id": {
+				Type:        schema.TypeString,
+				ForceNew:    true,
+				Computed:    true,
+				Optional:    true,
+				Description: "The secret id.",
+			},
 			"description": {
 				Type:        schema.TypeString,
 				Optional:    true,
@@ -182,6 +189,7 @@ func resourceConsulACLTokenRead(d *schema.ResourceData, meta interface{}) error 
 
 	sw := newStateWriter(d)
 	sw.set("accessor_id", aclToken.AccessorID)
+	sw.set("secret_id", aclToken.SecretID)
 	sw.set("description", aclToken.Description)
 	sw.set("policies", policies)
 	sw.set("roles", roles)
