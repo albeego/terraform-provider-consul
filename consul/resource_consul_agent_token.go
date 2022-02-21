@@ -40,6 +40,7 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 	if err != nil {
 		return fmt.Errorf("failed to update agent acl agent token: %v", err)
 	}
+	d.SetId(token)
 	return nil
 }
 
