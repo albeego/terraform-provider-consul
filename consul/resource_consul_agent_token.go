@@ -67,11 +67,6 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 }
 
 func resourceConsulAgentTokenRead(d *schema.ResourceData, meta interface{}) error {
-	token := d.Get("token").(string)
-	err := d.Set("token", token)
-	if err != nil {
-		return fmt.Errorf("failed to read agent acl agent token: %v", err)
-	}
 	return nil
 }
 
