@@ -16,7 +16,7 @@ func resourceConsulAgentToken() *schema.Resource {
 		},
 
 		Schema: map[string]*schema.Schema{
-			"token": {
+			"secret_id": {
 				Type:      schema.TypeString,
 				Required:  true,
 				Sensitive: true,
@@ -41,7 +41,7 @@ func resourceConsulAgentTokenCreate(d *schema.ResourceData, meta interface{}) er
 	client, _, writeOptions := getClient(d, meta)
 	agent := client.Agent()
 
-	token := d.Get("token").(string)
+	token := d.Get("secret_id").(string)
 	tokenName := d.Get("token_name").(string)
 
 	var err error
